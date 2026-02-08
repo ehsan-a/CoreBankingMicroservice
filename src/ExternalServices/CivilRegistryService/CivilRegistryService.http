@@ -1,0 +1,6 @@
+@CivilRegistryService_HostAddress = https://localhost:7293
+
+@id=0012345678
+GET {{CivilRegistryService_HostAddress}}/api/civilregistry/{{id}}
+
+###

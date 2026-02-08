@@ -1,0 +1,52 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/ExternalServices/">
+    <Project Path="src/ExternalServices/CentralBankCreditCheckService/CentralBankCreditCheckService.csproj" />
+    <Project Path="src/ExternalServices/CivilRegistryService/CivilRegistryService.csproj" />
+    <Project Path="src/ExternalServices/PoliceClearanceService/PoliceClearanceService.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/" />
+  <Folder Name="/src/Services/Account/">
+    <Project Path="src/Services/Account/Account.API/Account.API.csproj" />
+    <Project Path="src/Services/Account/Account.Application/Account.Application.csproj" />
+    <Project Path="src/Services/Account/Account.Domain/Account.Domain.csproj" />
+    <Project Path="src/Services/Account/Account.Infrastructure/Account.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Audit/">
+    <Project Path="src/Services/Audit/Audit.API/Audit.API.csproj" />
+    <Project Path="src/Services/Audit/Audit.Application/Audit.Application.csproj" />
+    <Project Path="src/Services/Audit/Audit.Domain/Audit.Domain.csproj" />
+    <Project Path="src/Services/Audit/Audit.Infrastructure/Audit.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Compliance/">
+    <Project Path="src/Services/Compliance/Compliance.API/Compliance.API.csproj" />
+    <Project Path="src/Services/Compliance/Compliance.Application/Compliance.Application.csproj" />
+    <Project Path="src/Services/Compliance/Compliance.Domain/Compliance.Domain.csproj" />
+    <Project Path="src/Services/Compliance/Compliance.Infrastructure/Compliance.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Customer/">
+    <Project Path="src/Services/Customer/Customer.API/Customer.API.csproj" />
+    <Project Path="src/Services/Customer/Customer.Application/Customer.Application.csproj" />
+    <Project Path="src/Services/Customer/Customer.Domain/Customer.Domain.csproj" />
+    <Project Path="src/Services/Customer/Customer.Infrastructure/Customer.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Identity/">
+    <Project Path="src/Services/Identity/Identity.API/Identity.API.csproj" />
+    <Project Path="src/Services/Identity/Identity.Application/Identity.Application.csproj" />
+    <Project Path="src/Services/Identity/Identity.Domain/Identity.Domain.csproj" />
+    <Project Path="src/Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Services/Transaction/">
+    <Project Path="src/Services/Transaction/Transaction.API/Transaction.API.csproj" />
+    <Project Path="src/Services/Transaction/Transaction.Application/Transaction.Application.csproj" />
+    <Project Path="src/Services/Transaction/Transaction.Domain/Transaction.Domain.csproj" />
+    <Project Path="src/Services/Transaction/Transaction.Infrastructure/Transaction.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/Shared.Application/Shared.Application.csproj" Id="3a89ace1-786b-411b-b81c-38caadb0e2d5" />
+    <Project Path="src/Shared/Shared.Domain/Shared.Domain.csproj" Id="cdc355c1-00d5-4336-af22-ffa477e6f6f0" />
+    <Project Path="src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj" Id="3d31485e-f546-4491-b62a-e45bd8d2c2d7" />
+    <Project Path="src/Shared/Shared.ServiceDefaults/Shared.ServiceDefaults.csproj" Id="8475e9ac-df95-41b8-89ae-574ba2f782e2" />
+  </Folder>
+  <Folder Name="/tests/" />
+</Solution>
