@@ -31,6 +31,8 @@ builder.Services
     .AddRateLimiting(builder.Configuration)
     .AddCustomHealthChecks(builder.Configuration);
 
+builder.AddApplicationServices();
+
 var app = builder.Build();
 
 app.UseCustomMiddlewares();

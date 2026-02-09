@@ -1,9 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Shared.Domain.Abstracttion;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Shared.Domain.Abstractions;
 
 namespace Shared.Infrastructure.Extensions
 {

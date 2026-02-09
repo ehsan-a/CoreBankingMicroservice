@@ -1,8 +1,10 @@
-﻿using MediatR;
+﻿using Account.Domain.Aggregates.BankAccountAggregate;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Shared.Domain.Interfaces;
 using Shared.Infrastructure.Extensions;
+using Shared.IntegrationEventLogEF;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,13 +20,14 @@ namespace Account.Infrastructure.Persistence
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.UseIntegrationEventLogs();
 
             modelBuilder.HasSequence<long>("AccountNumberSequence")
             .StartsAt(1000000000)
             .IncrementsBy(1);
         }
 
-        public DbSet<Domain.Aggregates.AccountAggregate.Account> Accounts { get; set; } = default!;
+        public DbSet<BankAccount> BankAccounts { get; set; } = default!;
 
         private readonly IMediator _mediator;
         private IDbContextTransaction _currentTransaction;

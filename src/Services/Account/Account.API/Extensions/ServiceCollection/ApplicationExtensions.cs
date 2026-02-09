@@ -1,7 +1,10 @@
 ﻿using Account.Application.Commands;
 using Account.Application.Interfaces;
 using Account.Application.Services;
-using Microsoft.AspNetCore.Authentication;
+using Account.Infrastructure.Persistence;
+using Shared.EventBus.Abstractions;
+using Shared.EventBus.Extensions;
+using Shared.IntegrationEventLogEF.Services;
 
 namespace Account.API.Extensions.ServiceCollection
 {
@@ -11,11 +14,16 @@ namespace Account.API.Extensions.ServiceCollection
              this IServiceCollection services)
         {
             services.AddAutoMapper(cfg =>
-      cfg.AddMaps(typeof(CreateAccountCommand).Assembly));
+      cfg.AddMaps(typeof(CreateBankAccountCommand).Assembly));
 
-            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IBankAccountService, BankAccountService>();
+
+
+
+
 
             return services;
         }
+
     }
 }

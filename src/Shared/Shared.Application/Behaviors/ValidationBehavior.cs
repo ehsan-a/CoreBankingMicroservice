@@ -35,7 +35,7 @@ namespace Shared.Application.Behaviors
                 _logger.LogWarning("Validation errors - {CommandType} - Command: {@Command} - Errors: {@ValidationErrors}", typeName, request, failures);
 
                 throw new ArgumentException(
-                    $"Command Validation Errors for type {typeof(TRequest).Name}", new FluentValidation.ValidationException("Validation exception", failures));
+                    $"Command Validation Errors for type {typeof(TRequest).Name}", new ValidationException("Validation exception", failures));
             }
 
             return await next();

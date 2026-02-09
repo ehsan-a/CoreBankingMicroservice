@@ -1,29 +1,26 @@
-﻿using Account.Domain.Aggregates.AccountAggregate;
+﻿using Account.Domain.Aggregates.BankAccountAggregate;
 using Ardalis.GuardClauses;
 using Shared.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Account.Domain.Extensions
 {
     public static class AccountGuards
     {
-        public static void Debit(this IGuardClause guardClause, Aggregates.AccountAggregate.Account account, decimal amount)
+        public static void Debit(this IGuardClause guardClause, BankAccount bankAccount, decimal amount)
         {
-            if (account.Status != AccountStatus.Active)
+            if (bankAccount.Status != BankAccountStatus.Active)
                 throw new DomainException("Account is not active");
 
             if (amount <= 0)
                 throw new DomainException("Invalid amount");
 
-            if (account.Balance < amount)
+            if (bankAccount.Balance < amount)
                 throw new DomainException("Insufficient funds");
         }
 
-        public static void Credit(this IGuardClause guardClause, Aggregates.AccountAggregate.Account account, decimal amount)
+        public static void Credit(this IGuardClause guardClause, BankAccount bankAccount, decimal amount)
         {
-            if (account.Status != AccountStatus.Active)
+            if (bankAccount.Status != BankAccountStatus.Active)
                 throw new DomainException("Account is not active");
 
             if (amount <= 0)

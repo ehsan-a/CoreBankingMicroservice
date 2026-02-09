@@ -1,5 +1,5 @@
 ﻿using Account.Application.Interfaces;
-using Account.Domain.Aggregates.AccountAggregate;
+using Account.Domain.Aggregates.BankAccountAggregate;
 using Account.Infrastructure.Generators;
 using Account.Infrastructure.Persistence;
 using Account.Infrastructure.Repositories;
@@ -22,7 +22,7 @@ namespace Account.API.Extensions.ServiceCollection
             services.AddScoped<INumberGenerator, AccountNumberGenerator>();
             //services.AddScoped(typeof(IAppLogger<>), typeof(LoggerAdapter<>));
 
-            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 
             return services;
         }

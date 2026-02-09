@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.IntegrationEventLogEF\Shared.IntegrationEventLogEF.csproj" />
     <ProjectReference Include="..\Account.Application\Account.Application.csproj" />
   </ItemGroup>
 

@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\Shared.Application\Shared.Application.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.EventBusRabbitMQ\Shared.EventBusRabbitMQ.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.IntegrationEventLogEF\Shared.IntegrationEventLogEF.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.ServiceDefaults\Shared.ServiceDefaults.csproj" />
     <ProjectReference Include="..\Account.Domain\Account.Domain.csproj" />
   </ItemGroup>
 
