@@ -1,15 +1,12 @@
 ﻿using Account.Domain.Aggregates.BankAccountAggregate;
+using Account.Infrastructure.Configurations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Shared.Domain.Interfaces;
 using Shared.Infrastructure.Extensions;
 using Shared.IntegrationEventLogEF;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Reflection;
-using System.Text;
 
 namespace Account.Infrastructure.Persistence
 {
@@ -19,7 +16,9 @@ namespace Account.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new ClientRequestEntityTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new BankAccountConfiguration());
+
             modelBuilder.UseIntegrationEventLogs();
 
             modelBuilder.HasSequence<long>("AccountNumberSequence")

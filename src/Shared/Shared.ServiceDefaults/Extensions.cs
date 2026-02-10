@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Shared.Infrastructure.HealthChecks;
-using Shared.Infrastructure.Middlewares;
+using Shared.ServiceDefaults.HealthChecks;
 
 namespace Shared.ServiceDefaults
 {
@@ -18,14 +18,17 @@ namespace Shared.ServiceDefaults
 
         public static IHostApplicationBuilder AddBasicServiceDefaults(this IHostApplicationBuilder builder)
         {
-            builder.Services
-    .AddValidation()
-    .AddCustomCors(builder.Configuration)
-    .AddJwtAuthentication(builder.Configuration)
-    .AddAuthorizationPolicies()
-    .AddSwaggerDocumentation()
-    .AddRateLimiting(builder.Configuration)
-    .AddCustomHealthChecks(builder.Configuration);
+            // Default health checks assume the event bus and self health checks
+            builder.AddDefaultHealthChecks();
+
+            return builder;
+        }
+
+        public static IHostApplicationBuilder AddDefaultHealthChecks(this IHostApplicationBuilder builder)
+        {
+            builder.Services.AddHealthChecks()
+                // Add a default liveness check to ensure app is responsive
+                .AddCheck("self", () => HealthCheckResult.Healthy(), ["live"]);
 
             return builder;
         }
@@ -51,15 +54,6 @@ namespace Shared.ServiceDefaults
                     Predicate = _ => false,
                 });
             }
-
-            return app;
-        }
-
-        public static IApplicationBuilder UseCustomMiddlewares(
-          this IApplicationBuilder app)
-        {
-            app.UseMiddleware<RequestLoggingMiddleware>();
-            app.UseMiddleware<GlobalExceptionMiddleware>();
 
             return app;
         }

@@ -70,11 +70,18 @@ namespace Account.API.Controllers
 
         // POST: api/BankAccounts
         [HttpPost]
-        public async Task<ActionResult<BankAccountResponseDto>> PostBankAccount(CreateBankAccountRequestDto dto, CancellationToken cancellationToken)
+        public async Task<ActionResult<BankAccountResponseDto>> PostBankAccount(CreateBankAccountRequestDto dto, [FromHeader(Name = "x-requestid")] Guid requestId, CancellationToken cancellationToken)
         {
-            var bankAccount = await _bankAccountService.CreateAsync(dto, User, cancellationToken);
+            if (requestId == Guid.Empty)
+            {
+                return BadRequest("Empty GUID is not valid for request ID");
+            }
 
-            return CreatedAtAction("GetBankAccount", new { id = bankAccount.Id }, bankAccount);
+            var result = await _bankAccountService.CreateAsync(dto, requestId, User, cancellationToken);
+
+            return Created();
+
+            //return CreatedAtAction("GetBankAccount", new { id = bankAccount.Id }, bankAccount);
         }
 
         // DELETE: api/BankAccounts/5

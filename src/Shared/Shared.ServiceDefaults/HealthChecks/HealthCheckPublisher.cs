@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
 
-namespace Shared.Infrastructure.HealthChecks
+namespace Shared.ServiceDefaults.HealthChecks
 {
     public class HealthCheckPublisher : IHealthCheckPublisher
     {

@@ -1,12 +1,9 @@
 ﻿using Account.Application.DTOs;
 using Shared.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Account.Application.Commands
 {
-    public class CreateBankAccountCommand : ICommand<BankAccountResponseDto>
+    public class CreateBankAccountCommand : ICommand<bool>
     {
         public Guid CustomerId { get; set; }
         public Guid UserId { get; set; }

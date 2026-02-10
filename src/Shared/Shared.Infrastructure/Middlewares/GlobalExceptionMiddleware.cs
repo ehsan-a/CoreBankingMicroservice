@@ -50,7 +50,10 @@ namespace Shared.Infrastructure.Middlewares
                     statusCode = HttpStatusCode.Conflict;
                     message = exception.Message;
                     break;
-
+                case ValidationException:
+                    statusCode = HttpStatusCode.BadRequest;
+                    message = exception.Message;
+                    break;
                 case ArgumentException:
                     statusCode = HttpStatusCode.BadRequest;
                     message = exception.Message;
@@ -68,10 +71,6 @@ namespace Shared.Infrastructure.Middlewares
                 //    statusCode = HttpStatusCode.BadRequest;
                 //    message = exception.Message;
                 //    break;
-                case ValidationException:
-                    statusCode = HttpStatusCode.BadRequest;
-                    message = exception.Message;
-                    break;
 
                 case DomainException:
                     statusCode = HttpStatusCode.BadRequest;

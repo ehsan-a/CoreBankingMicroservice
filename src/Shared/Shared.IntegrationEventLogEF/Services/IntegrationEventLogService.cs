@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Shared.EventBus.Events;
-using System.Reflection;
 
 namespace Shared.IntegrationEventLogEF.Services
 {
@@ -15,10 +14,23 @@ namespace Shared.IntegrationEventLogEF.Services
         public IntegrationEventLogService(TContext context)
         {
             _context = context;
-            _eventTypes = Assembly.Load(Assembly.GetEntryAssembly().FullName)
-                .GetTypes()
-                .Where(t => t.Name.EndsWith(nameof(IntegrationEvent)))
-                .ToArray();
+
+            _eventTypes = AppDomain.CurrentDomain
+    .GetAssemblies()
+    //.Where(a =>
+    //    !a.IsDynamic &&
+    //    !string.IsNullOrEmpty(a.FullName) &&
+    //    a.FullName.StartsWith("Account") 
+    //)
+    .SelectMany(a => a.GetTypes())
+    .Where(t =>
+        t.IsClass &&
+        !t.IsAbstract &&
+        t.IsSubclassOf(typeof(IntegrationEvent))
+    )
+    .ToArray();
+
+
         }
 
         public async Task<IEnumerable<IntegrationEventLogEntry>> RetrieveEventLogsPendingToPublishAsync(Guid transactionId)

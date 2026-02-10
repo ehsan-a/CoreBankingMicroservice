@@ -8,9 +8,5 @@ namespace Shared.Domain.Interfaces
     {
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default);
-        //Task<IDbContextTransaction> BeginTransactionAsync();
-        //Task CommitTransactionAsync(IDbContextTransaction transaction);
-        //void RollbackTransaction();
-        //IDbContextTransaction GetCurrentTransaction();
     }
 }

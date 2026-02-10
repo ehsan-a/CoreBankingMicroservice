@@ -1,4 +1,4 @@
-using Account.API.Extensions.ServiceCollection;
+using Account.API.Extensions;
 using Serilog;
 using Shared.ServiceDefaults;
 
@@ -19,18 +19,7 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services
-    .AddCustomMediatR()
-    .AddValidation()
-    .AddInfrastructure(builder.Configuration)
-    .AddApplicationServices()
-    .AddCustomCors(builder.Configuration)
-    .AddJwtAuthentication(builder.Configuration)
-    .AddAuthorizationPolicies()
-    .AddSwaggerDocumentation()
-    .AddRateLimiting(builder.Configuration)
-    .AddCustomHealthChecks(builder.Configuration);
-
+//builder.AddServiceDefaults();
 builder.AddApplicationServices();
 
 var app = builder.Build();

@@ -1,10 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Shared.Infrastructure.HealthChecks;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Shared.ServiceDefaults.HealthChecks;
 
 namespace Shared.ServiceDefaults
 {

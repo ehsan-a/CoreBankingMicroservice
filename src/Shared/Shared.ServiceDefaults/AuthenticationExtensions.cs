@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace Shared.ServiceDefaults
 {
     public static class AuthenticationExtensions
     {
-        public static IServiceCollection AddJwtAuthentication(
-            this IServiceCollection services,
-            IConfiguration configuration)
+        public static IServiceCollection AddDefaultAuthentication(this IHostApplicationBuilder builder)
         {
+            var services = builder.Services;
+            var configuration = builder.Configuration;
+
             var jwtSection = configuration.GetSection("jwt");
 
             if (!jwtSection.Exists())
@@ -42,7 +42,6 @@ namespace Shared.ServiceDefaults
                         ClockSkew = TimeSpan.Zero
                     };
                 });
-
             return services;
         }
     }

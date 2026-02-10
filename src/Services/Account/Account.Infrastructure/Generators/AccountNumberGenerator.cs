@@ -1,8 +1,10 @@
 ﻿using Account.Application.Interfaces;
 using Account.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace Account.Infrastructure.Generators
@@ -19,14 +21,22 @@ namespace Account.Infrastructure.Generators
         public async Task<string> GenerateAccountNumberAsync()
         {
             var connection = _context.Database.GetDbConnection();
-            if (connection.State != System.Data.ConnectionState.Open)
+
+            if (connection.State != ConnectionState.Open)
                 await connection.OpenAsync();
 
             using var command = connection.CreateCommand();
             command.CommandText = "SELECT NEXT VALUE FOR AccountNumberSequence";
 
+            var currentTransaction = _context.Database.CurrentTransaction;
+            if (currentTransaction != null)
+            {
+                command.Transaction = currentTransaction.GetDbTransaction();
+            }
+
             var result = await command.ExecuteScalarAsync();
             return $"10{Convert.ToInt64(result)}";
         }
+
     }
 }

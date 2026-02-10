@@ -16,10 +16,11 @@ namespace Shared.EventBusRabbitMQ
      ILogger<RabbitMQEventBus> logger,
      IServiceProvider serviceProvider,
      IOptions<EventBusOptions> options,
-     IOptions<EventBusSubscriptionInfo> subscriptionOptions) : IEventBus, IDisposable, IHostedService
+     IOptions<EventBusSubscriptionInfo> subscriptionOptions,
+     IOptions<RabbitMqOptions> rabbitOptions) : IEventBus, IDisposable, IHostedService
     {
-        private const string ExchangeName = "eshop_event_bus";
-
+        private const string ExchangeName = "CoreBanking_event_bus";
+        private readonly RabbitMqOptions _rabbitOptions = rabbitOptions.Value;
         private readonly string _queueName = options.Value.SubscriptionClientName;
         private readonly EventBusSubscriptionInfo _subscriptionInfo = subscriptionOptions.Value;
         private IConnection _rabbitMQConnection;
@@ -70,8 +71,7 @@ namespace Shared.EventBusRabbitMQ
             }
             catch (Exception ex)
             {
-
-                throw;
+                logger.LogError(ex, "Failed to publish event {EventId} to RabbitMQ", @event.Id);
             }
         }
 
@@ -169,16 +169,17 @@ namespace Shared.EventBusRabbitMQ
                 {
                     logger.LogInformation("Starting RabbitMQ connection on a background thread");
 
-                    _rabbitMQConnection = serviceProvider.GetRequiredService<IConnection>();
-                    if (!_rabbitMQConnection.IsOpen)
+                    var factory = new ConnectionFactory
                     {
-                        return;
-                    }
+                        HostName = _rabbitOptions.HostName,
+                        Port = _rabbitOptions.Port,
+                        UserName = _rabbitOptions.UserName,
+                        Password = _rabbitOptions.Password,
+                        VirtualHost = _rabbitOptions.VirtualHost,
+                        ClientProvidedName = _rabbitOptions.ClientProvidedName
+                    };
 
-                    if (logger.IsEnabled(LogLevel.Trace))
-                    {
-                        logger.LogTrace("Creating RabbitMQ consumer channel");
-                    }
+                    _rabbitMQConnection = await factory.CreateConnectionAsync(cancellationToken);
 
                     _consumerChannel = await _rabbitMQConnection.CreateChannelAsync();
 

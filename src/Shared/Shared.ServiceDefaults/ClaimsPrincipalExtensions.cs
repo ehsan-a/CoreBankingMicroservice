@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Shared.Application.Extensions
+namespace Shared.ServiceDefaults
 {
     public static class ClaimsPrincipalExtensions
     {

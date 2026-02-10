@@ -5,16 +5,16 @@ namespace Shared.Domain.Abstractions
     public abstract class BaseEntity
     {
         int? _requestedHashCode;
-        Guid _Id;
+        Guid _id;
         public virtual Guid Id
         {
             get
             {
-                return _Id;
+                return _id;
             }
             protected set
             {
-                _Id = value;
+                _id = value;
             }
         }
 

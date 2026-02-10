@@ -18,6 +18,7 @@ namespace Shared.EventBusRabbitMQ
         // }
 
         private const string SectionName = "EventBus";
+        private const string RabbitMqSectionName = "RabbitMQ";
 
         public static IEventBusBuilder AddRabbitMqEventBus(this IHostApplicationBuilder builder, string connectionName)
         {
@@ -28,10 +29,15 @@ namespace Shared.EventBusRabbitMQ
             // Options support
             builder.Services.Configure<EventBusOptions>(builder.Configuration.GetSection(SectionName));
 
+            builder.Services.Configure<RabbitMqOptions>(
+     builder.Configuration.GetSection(RabbitMqSectionName));
+
             // Abstractions on top of the core client API
             builder.Services.AddSingleton<IEventBus, RabbitMQEventBus>();
             // Start consuming messages as soon as the application starts
             builder.Services.AddSingleton<IHostedService>(sp => (RabbitMQEventBus)sp.GetRequiredService<IEventBus>());
+
+
 
             return new EventBusBuilder(builder.Services);
         }

@@ -4,7 +4,7 @@ using System.Net.Mime;
 using System.Text;
 using System.Text.Json;
 
-namespace Shared.Infrastructure.HealthChecks
+namespace Shared.ServiceDefaults.HealthChecks
 {
     public static class HealthCheckResponses
     {
