@@ -1,11 +1,10 @@
 ﻿using Account.Application.DTOs;
-using Account.Application.Queries;
 using Account.Application.Specifications;
 using Account.Domain.Aggregates.BankAccountAggregate;
 using AutoMapper;
 using Shared.Application.Interfaces;
 
-namespace Account.Application.Handlers
+namespace Account.Application.Queries
 {
     public class GetBankAccountByIdQueryHandler : IQueryHandler<GetBankAccountByIdQuery, BankAccountResponseDto>
     {

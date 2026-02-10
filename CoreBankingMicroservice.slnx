@@ -32,9 +32,6 @@
   </Folder>
   <Folder Name="/src/Services/Identity/">
     <Project Path="src/Services/Identity/Identity.API/Identity.API.csproj" />
-    <Project Path="src/Services/Identity/Identity.Application/Identity.Application.csproj" />
-    <Project Path="src/Services/Identity/Identity.Domain/Identity.Domain.csproj" />
-    <Project Path="src/Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/Services/Transaction/">
     <Project Path="src/Services/Transaction/Transaction.API/Transaction.API.csproj" />

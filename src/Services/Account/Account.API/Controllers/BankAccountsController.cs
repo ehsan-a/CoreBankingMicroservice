@@ -1,5 +1,6 @@
 ﻿using Account.Application.DTOs;
 using Account.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,6 +20,7 @@ namespace Account.API.Controllers
 
         // GET: api/BankAccounts
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<BankAccountResponseDto>>> GetBankAccounts(CancellationToken cancellationToken, int limit = 25, int offset = 0)
         {
             var bankAccount = await _bankAccountService.GetAllAsync(limit, offset, cancellationToken);
@@ -42,16 +44,16 @@ namespace Account.API.Controllers
 
         // PUT: api/BankAccounts/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBankAccount(Guid id, UpdateBankAccountRequestDto dto, CancellationToken cancellationToken)
+        public async Task<IActionResult> PutBankAccount(Guid id, UpdateBankAccountRequest request, CancellationToken cancellationToken)
         {
-            if (id != dto.Id)
+            if (id != request.Id)
             {
                 return BadRequest();
             }
             try
             {
                 //var account = await _bankAccountService.GetByIdAsync(id, cancellationToken);
-                await _bankAccountService.UpdateAsync(dto, User, cancellationToken);
+                await _bankAccountService.UpdateAsync(request, User, cancellationToken);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -70,14 +72,14 @@ namespace Account.API.Controllers
 
         // POST: api/BankAccounts
         [HttpPost]
-        public async Task<ActionResult<BankAccountResponseDto>> PostBankAccount(CreateBankAccountRequestDto dto, [FromHeader(Name = "x-requestid")] Guid requestId, CancellationToken cancellationToken)
+        public async Task<ActionResult<BankAccountResponseDto>> PostBankAccount(CreateBankAccountRequest request, [FromHeader(Name = "x-requestid")] Guid requestId, CancellationToken cancellationToken)
         {
             if (requestId == Guid.Empty)
             {
                 return BadRequest("Empty GUID is not valid for request ID");
             }
 
-            var result = await _bankAccountService.CreateAsync(dto, requestId, User, cancellationToken);
+            var result = await _bankAccountService.CreateAsync(request, requestId, User, cancellationToken);
 
             return Created();
 

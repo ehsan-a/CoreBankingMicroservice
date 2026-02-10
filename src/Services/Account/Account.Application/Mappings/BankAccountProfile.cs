@@ -11,8 +11,8 @@ namespace Account.Application.Mappings
         {
             CreateMap<BankAccount, BankAccountResponseDto>();
 
-            CreateMap<CreateBankAccountRequestDto, CreateBankAccountCommand>();
-            CreateMap<UpdateBankAccountRequestDto, UpdateBankAccountCommand>();
+            CreateMap<CreateBankAccountRequest, CreateBankAccountCommand>();
+            CreateMap<UpdateBankAccountRequest, UpdateBankAccountCommand>();
         }
     }
 }

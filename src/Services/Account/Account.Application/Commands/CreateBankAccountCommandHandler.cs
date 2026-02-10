@@ -1,5 +1,4 @@
-﻿using Account.Application.Commands;
-using Account.Application.DTOs;
+﻿using Account.Application.DTOs;
 using Account.Application.Interfaces;
 using Account.Domain.Aggregates.BankAccountAggregate;
 using AutoMapper;
@@ -7,7 +6,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using Shared.Application.Interfaces;
 
-namespace Account.Application.Handlers
+namespace Account.Application.Commands
 {
     public class CreateBankAccountCommandHandler : ICommandHandler<CreateBankAccountCommand, bool>
     {

@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +16,19 @@ namespace Account.Application.Commands
         {
             Command = command;
             Id = id;
+        }
+    }
+
+    public class IdentifiedCommandValidator : AbstractValidator<IdentifiedCommand<CreateBankAccountCommand, bool>>
+    {
+        public IdentifiedCommandValidator(ILogger<IdentifiedCommandValidator> logger)
+        {
+            RuleFor(command => command.Id).NotEmpty();
+
+            if (logger.IsEnabled(LogLevel.Trace))
+            {
+                logger.LogTrace("INSTANCE CREATED - {ClassName}", GetType().Name);
+            }
         }
     }
 }

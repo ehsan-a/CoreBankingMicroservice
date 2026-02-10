@@ -3,7 +3,6 @@ using Account.Application.DTOs;
 using Account.Application.Interfaces;
 using Account.Application.Queries;
 using AutoMapper;
-using Azure.Core;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Shared.Application.Extensions;
@@ -25,7 +24,7 @@ namespace Account.Application.Services
             _logger = logger;
         }
 
-        public async Task<bool> CreateAsync(CreateBankAccountRequestDto dto, Guid requestId, ClaimsPrincipal principal, CancellationToken cancellationToken)
+        public async Task<bool> CreateAsync(CreateBankAccountRequest request, Guid requestId, ClaimsPrincipal principal, CancellationToken cancellationToken)
         {
             //var command = _mapper.Map<CreateBankAccountCommand>(dto);
             //command.UserId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
@@ -34,7 +33,7 @@ namespace Account.Application.Services
 
             using (_logger.BeginScope(new List<KeyValuePair<string, object>> { new("IdentifiedCommandId", requestId) }))
             {
-                var command = _mapper.Map<CreateBankAccountCommand>(dto);
+                var command = _mapper.Map<CreateBankAccountCommand>(request);
                 command.UserId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
                 //command.UserId = principal.GetUserId();
 
@@ -78,9 +77,9 @@ namespace Account.Application.Services
 
         }
 
-        public async Task UpdateAsync(UpdateBankAccountRequestDto dto, ClaimsPrincipal principal, CancellationToken cancellationToken)
+        public async Task UpdateAsync(UpdateBankAccountRequest request, ClaimsPrincipal principal, CancellationToken cancellationToken)
         {
-            var command = _mapper.Map<UpdateBankAccountCommand>(dto);
+            var command = _mapper.Map<UpdateBankAccountCommand>(request);
             command.UserId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
             //command.UserId = principal.GetUserId();
             await _mediator.Send(command);

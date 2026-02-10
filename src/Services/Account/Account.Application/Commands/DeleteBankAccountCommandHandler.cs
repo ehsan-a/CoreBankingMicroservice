@@ -1,9 +1,8 @@
-﻿using Account.Application.Commands;
-using Account.Application.Specifications;
+﻿using Account.Application.Specifications;
 using Account.Domain.Aggregates.BankAccountAggregate;
 using Shared.Application.Interfaces;
 
-namespace Account.Application.Handlers
+namespace Account.Application.Commands
 {
     public class DeleteBankAccountCommandHandler : ICommandHandler<DeleteBankAccountCommand>
     {

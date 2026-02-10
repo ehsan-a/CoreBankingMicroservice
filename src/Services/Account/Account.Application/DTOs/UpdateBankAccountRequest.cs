@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Account.Application.DTOs
 {
-    public class UpdateBankAccountRequestDto
-    {
-        public Guid Id { get; set; }
-        public BankAccountStatus Status { get; set; }
-    }
+    public record UpdateBankAccountRequest(
+
+     Guid Id,
+     BankAccountStatus Status);
 }

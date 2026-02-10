@@ -1,11 +1,10 @@
-﻿using Account.Application.Commands;
-using Account.Domain.Aggregates.BankAccountAggregate;
+﻿using Account.Domain.Aggregates.BankAccountAggregate;
 using AutoMapper;
 using Shared.Application.Exceptions;
 using Shared.Application.Interfaces;
 using System.Text.Json;
 
-namespace Account.Application.Handlers
+namespace Account.Application.Commands
 {
     public class UpdateBankAccountCommandHandler : ICommandHandler<UpdateBankAccountCommand>
     {

@@ -1,9 +1,7 @@
-﻿
-using Account.Application.Queries;
-using Account.Domain.Aggregates.BankAccountAggregate;
+﻿using Account.Domain.Aggregates.BankAccountAggregate;
 using Shared.Application.Interfaces;
 
-namespace Account.Application.Handlers
+namespace Account.Application.Queries
 {
     public class GetBankAccountExistsQueryHandler : IQueryHandler<GetBankAccountExistsQuery, bool>
     {
