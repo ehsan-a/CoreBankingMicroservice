@@ -6,4 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Application\Shared.Application.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.EventBusRabbitMQ\Shared.EventBusRabbitMQ.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.ServiceDefaults\Shared.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Audit.Domain\Audit.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

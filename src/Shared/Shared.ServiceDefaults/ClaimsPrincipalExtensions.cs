@@ -6,14 +6,16 @@ namespace Shared.ServiceDefaults
     {
         public static Guid GetUserId(this ClaimsPrincipal principal)
         {
-            if (!Guid.TryParse(principal.FindFirst("sub")?.Value, out var userId))
-            {
+            var userIdClaim = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!Guid.TryParse(userIdClaim, out var userId))
                 throw new UnauthorizedAccessException("Invalid user id claim");
-            }
+
             return userId;
         }
 
         public static string? GetUserName(this ClaimsPrincipal principal) =>
-            principal.FindFirst(x => x.Type == ClaimTypes.Name)?.Value;
+                principal.FindFirst(ClaimTypes.Name)?.Value;
+
     }
 }

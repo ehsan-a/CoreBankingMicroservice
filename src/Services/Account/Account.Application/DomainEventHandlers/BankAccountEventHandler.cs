@@ -28,7 +28,7 @@ namespace Account.Application.DomainEventHandlers
         public async Task Handle(BankAccountCreatedEvent domainEvent, CancellationToken cancellationToken)
         {
 
-            var integrationEvent = new AccountCreatedIntegrationEvent(domainEvent.UserId,
+            var integrationEvent = new BankAccountCreatedIntegrationEvent(domainEvent.UserId,
                 new BankAccountResponseDto
                 {
                     Id = domainEvent.BankAccount.Id,

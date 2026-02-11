@@ -26,16 +26,10 @@ namespace Account.Application.Services
 
         public async Task<bool> CreateAsync(CreateBankAccountRequest request, Guid requestId, ClaimsPrincipal principal, CancellationToken cancellationToken)
         {
-            //var command = _mapper.Map<CreateBankAccountCommand>(dto);
-            //command.UserId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
-            ////command.UserId = principal.GetUserId();
-            //return await _mediator.Send(command);
-
             using (_logger.BeginScope(new List<KeyValuePair<string, object>> { new("IdentifiedCommandId", requestId) }))
             {
                 var command = _mapper.Map<CreateBankAccountCommand>(request);
-                command.UserId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
-                //command.UserId = principal.GetUserId();
+                command.UserId = principal.GetUserId();
 
                 var requestCreateOrder = new IdentifiedCommand<CreateBankAccountCommand, bool>(command, requestId);
 
@@ -80,14 +74,12 @@ namespace Account.Application.Services
         public async Task UpdateAsync(UpdateBankAccountRequest request, ClaimsPrincipal principal, CancellationToken cancellationToken)
         {
             var command = _mapper.Map<UpdateBankAccountCommand>(request);
-            command.UserId = new Guid("3fa85f64-5717-4562-b3fc-2c963f66afa6");
-            //command.UserId = principal.GetUserId();
+            command.UserId = principal.GetUserId();
             await _mediator.Send(command);
         }
         public async Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken)
         {
             return await _mediator.Send(new GetBankAccountExistsQuery { Id = id });
         }
-
     }
 }
