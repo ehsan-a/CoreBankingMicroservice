@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.IntegrationEventLogEF\Shared.IntegrationEventLogEF.csproj" />
+    <ProjectReference Include="..\Customer.Application\Customer.Application.csproj" />
+  </ItemGroup>
+
 </Project>

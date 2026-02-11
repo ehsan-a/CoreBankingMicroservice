@@ -1,0 +1,8 @@
+﻿
+//namespace Compliance.Application.Interfaces
+//{
+//    public interface ICentralBankCreditCheckService
+//    {
+//        Task<CentralBankCreditCheckResponseDto?> GetResultInfoAsync(string nationalCode);
+//    }
+//}

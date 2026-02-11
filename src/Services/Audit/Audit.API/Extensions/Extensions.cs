@@ -44,6 +44,7 @@ namespace Audit.API.Extensions
         private static void AddEventBusSubscriptions(this IEventBusBuilder eventBus)
         {
             eventBus.AddSubscription<BankAccountCreatedIntegrationEvent, BankAccountCreatedIntegrationEventHandler>();
+            eventBus.AddSubscription<BankCustomerCreatedIntegrationEvent, BankCustomerCreatedIntegrationEventHandler>();
         }
 
         public static IApplicationBuilder UseCustomMiddlewares(
