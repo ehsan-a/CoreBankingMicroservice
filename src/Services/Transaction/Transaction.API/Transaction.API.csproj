@@ -7,7 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Transaction.Application\Transaction.Application.csproj" />
+    <ProjectReference Include="..\Transaction.Domain\Transaction.Domain.csproj" />
+    <ProjectReference Include="..\Transaction.Infrastructure\Transaction.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

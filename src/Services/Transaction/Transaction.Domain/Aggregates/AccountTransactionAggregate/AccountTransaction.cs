@@ -1,0 +1,54 @@
+﻿using Ardalis.GuardClauses;
+using Shared.Domain.Abstractions;
+using Shared.Domain.Interfaces;
+using Transaction.Domain.Events;
+
+namespace Transaction.Domain.Aggregates.AccountTransactionAggregate
+{
+    public class AccountTransaction : BaseEntity, IAggregateRoot
+    {
+        private AccountTransaction(
+            Guid debitAccountId,
+            Guid creditAccountId,
+            decimal amount,
+            string description,
+            TransactionType type)
+        {
+            Guard.Against.NullOrEmpty(debitAccountId, nameof(debitAccountId));
+            Guard.Against.NullOrEmpty(creditAccountId, nameof(creditAccountId));
+            Guard.Against.NegativeOrZero(amount, nameof(amount));
+            Guard.Against.NullOrEmpty(description, nameof(description));
+            Guard.Against.EnumOutOfRange(type, nameof(type));
+
+            DebitAccountId = debitAccountId;
+            CreditAccountId = creditAccountId;
+            Amount = amount;
+            Description = description;
+            Type = type;
+        }
+
+#pragma warning disable CS8618 // Required by Entity Framework
+        private AccountTransaction() { }
+
+        public Guid DebitAccountId { get; private set; }
+        public Guid CreditAccountId { get; private set; }
+        public decimal Amount { get; private set; }
+        public string Description { get; private set; }
+        public TransactionType Type { get; private set; }
+        public DateTime CreatedAt { get; private set; } = DateTime.Now;
+
+
+        public static AccountTransaction Create(
+            Guid debitAccountId,
+            Guid creditAccountId,
+            decimal amount,
+            string description,
+            TransactionType type,
+            Guid userId)
+        {
+            var transaction = new AccountTransaction(debitAccountId, creditAccountId, amount, description, type);
+            transaction.AddDomainEvent(new TransactionCreatedEvent(transaction, userId));
+            return transaction;
+        }
+    }
+}
