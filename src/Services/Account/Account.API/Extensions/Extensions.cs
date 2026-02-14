@@ -38,7 +38,7 @@ namespace Account.API.Extensions
 
             services.AddTransient<IAccountIntegrationEventService, AccountIntegrationEventService>();
 
-            builder.AddRabbitMqEventBus("eventbus")
+            builder.AddRabbitMqEventBus()
                    .AddEventBusSubscriptions();
 
             services.AddHttpContextAccessor();

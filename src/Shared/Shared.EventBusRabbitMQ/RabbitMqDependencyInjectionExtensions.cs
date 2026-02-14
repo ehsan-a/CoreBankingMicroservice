@@ -20,17 +20,14 @@ namespace Shared.EventBusRabbitMQ
         private const string SectionName = "EventBus";
         private const string RabbitMqSectionName = "RabbitMQ";
 
-        public static IEventBusBuilder AddRabbitMqEventBus(this IHostApplicationBuilder builder, string connectionName)
+        public static IEventBusBuilder AddRabbitMqEventBus(this IHostApplicationBuilder builder)
         {
             ArgumentNullException.ThrowIfNull(builder);
-
-            //builder.AddRabbitMQClient(connectionName);
 
             // Options support
             builder.Services.Configure<EventBusOptions>(builder.Configuration.GetSection(SectionName));
 
-            builder.Services.Configure<RabbitMqOptions>(
-     builder.Configuration.GetSection(RabbitMqSectionName));
+            builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection(RabbitMqSectionName));
 
             // Abstractions on top of the core client API
             builder.Services.AddSingleton<IEventBus, RabbitMQEventBus>();

@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Shared.Application\Shared.Application.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.EventBusRabbitMQ\Shared.EventBusRabbitMQ.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.IntegrationEventLogEF\Shared.IntegrationEventLogEF.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Shared.ServiceDefaults\Shared.ServiceDefaults.csproj" />
+    <ProjectReference Include="..\Compliance.Domain\Compliance.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="IntegrationEvents\EventHandling\" />
+  </ItemGroup>
+
 </Project>

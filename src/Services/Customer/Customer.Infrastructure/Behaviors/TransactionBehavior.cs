@@ -14,11 +14,11 @@ namespace Customer.Infrastructure.Behaviors
         private readonly ICustomerIntegrationEventService _customerIntegrationEventService;
 
         public TransactionBehavior(CustomerDbContext dbContext,
-            ICustomerIntegrationEventService orderingIntegrationEventService,
+            ICustomerIntegrationEventService customerIntegrationEventService,
             ILogger<TransactionBehavior<TRequest, TResponse>> logger)
         {
             _dbContext = dbContext ?? throw new ArgumentException(nameof(CustomerDbContext));
-            _customerIntegrationEventService = orderingIntegrationEventService ?? throw new ArgumentException(nameof(orderingIntegrationEventService));
+            _customerIntegrationEventService = customerIntegrationEventService ?? throw new ArgumentException(nameof(customerIntegrationEventService));
             _logger = logger ?? throw new ArgumentException(nameof(ILogger));
         }
 

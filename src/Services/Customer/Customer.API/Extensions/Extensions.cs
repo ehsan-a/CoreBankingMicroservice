@@ -38,7 +38,7 @@ namespace Customer.API.Extensions
 
             services.AddTransient<ICustomerIntegrationEventService, CustomerIntegrationEventService>();
 
-            builder.AddRabbitMqEventBus("eventbus")
+            builder.AddRabbitMqEventBus()
                    .AddEventBusSubscriptions();
 
             services.AddHttpContextAccessor();
@@ -80,5 +80,4 @@ namespace Customer.API.Extensions
             return app;
         }
     }
-
 }

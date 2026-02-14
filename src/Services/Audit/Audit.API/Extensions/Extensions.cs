@@ -26,7 +26,7 @@ namespace Audit.API.Extensions
 
             //services.AddMigration<AccountDbContext, AccountDbContextSeed>();
 
-            builder.AddRabbitMqEventBus("eventbus")
+            builder.AddRabbitMqEventBus()
                    .AddEventBusSubscriptions();
 
             services.AddHttpContextAccessor();

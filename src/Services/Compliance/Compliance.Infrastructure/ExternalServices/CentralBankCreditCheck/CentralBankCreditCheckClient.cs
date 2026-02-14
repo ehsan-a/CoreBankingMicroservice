@@ -1,35 +1,34 @@
-﻿//using Customer.Application.DTOs;
-//using Customer.Application.Interfaces;
-//using Customer.Infrastructure.ExternalServices.CentralBankCreditCheck;
-//using System.Net;
-//using System.Net.Http.Json;
+﻿using Compliance.Application.DTOs;
+using Compliance.Application.Interfaces;
+using System.Net;
+using System.Net.Http.Json;
 
-//namespace Compliance.Infrastructure.ExternalServices.CentralBankCreditCheck
-//{
-//    public class CentralBankCreditCheckClient : ICentralBankCreditCheckService
-//    {
-//        private readonly HttpClient _httpClient;
+namespace Compliance.Infrastructure.ExternalServices.CentralBankCreditCheck
+{
+    public class CentralBankCreditCheckClient : ICentralBankCreditCheckService
+    {
+        private readonly HttpClient _httpClient;
 
-//        public CentralBankCreditCheckClient(HttpClient httpClient)
-//        {
-//            _httpClient = httpClient;
-//        }
-//        public async Task<CentralBankCreditCheckResponseDto?> GetResultInfoAsync(string nationalCode)
-//        {
-//            var response = await _httpClient.GetAsync($"api/centralbankcreditcheck/{nationalCode}");
+        public CentralBankCreditCheckClient(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+        public async Task<CentralBankCreditCheckResponseDto?> GetResultInfoAsync(string nationalCode)
+        {
+            var response = await _httpClient.GetAsync($"api/centralbankcreditcheck/{nationalCode}");
 
-//            if (response.StatusCode == HttpStatusCode.NotFound)
-//                return null;
+            if (response.StatusCode == HttpStatusCode.NotFound)
+                return null;
 
-//            response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
-//            var reslut = await _httpClient.GetFromJsonAsync<CentralBankCreditCheckDto>($"api/centralbankcreditcheck/{nationalCode}");
-//            return new CentralBankCreditCheckResponseDto
-//            {
-//                IsValid = reslut.IsValid,
-//                Reason = reslut.Reason,
-//                CheckedAt = reslut.CheckedAt,
-//            };
-//        }
-//    }
-//}
+            var reslut = await _httpClient.GetFromJsonAsync<CentralBankCreditCheckDto>($"api/centralbankcreditcheck/{nationalCode}");
+            return new CentralBankCreditCheckResponseDto
+            {
+                IsValid = reslut.IsValid,
+                Reason = reslut.Reason,
+                CheckedAt = reslut.CheckedAt,
+            };
+        }
+    }
+}

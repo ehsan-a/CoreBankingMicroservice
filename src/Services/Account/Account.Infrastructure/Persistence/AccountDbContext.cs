@@ -40,7 +40,7 @@ namespace Account.Infrastructure.Persistence
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
 
-            System.Diagnostics.Debug.WriteLine("OrderingContext::ctor ->" + this.GetHashCode());
+            System.Diagnostics.Debug.WriteLine("AccountDbContext::ctor ->" + this.GetHashCode());
         }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
