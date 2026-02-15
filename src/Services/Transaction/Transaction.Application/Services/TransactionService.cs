@@ -20,7 +20,7 @@ namespace Transaction.Application.Services
             _mediator = mediator;
         }
 
-        public async Task<TransactionResponseDto> CreateAsync(CreateTransactionRequestDto createTransactionRequestDto, ClaimsPrincipal principal, string idempotencyKey, CancellationToken cancellationToken)
+        public async Task<TransactionResponseDto> CreateAsync(CreateTransactionRequestDto createTransactionRequestDto, ClaimsPrincipal principal, CancellationToken cancellationToken)
         {
             var command = _mapper.Map<CreateTransactionCommand>(createTransactionRequestDto);
             command.UserId = principal.GetUserId();

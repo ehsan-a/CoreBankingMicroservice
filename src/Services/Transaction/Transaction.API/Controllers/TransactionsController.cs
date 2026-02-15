@@ -7,7 +7,7 @@ namespace Transaction.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "Accessibility")]
+    //[Authorize(Policy = "Accessibility")]
     public class TransactionsController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
@@ -40,14 +40,10 @@ namespace Transaction.API.Controllers
         }
 
         // POST: api/Transactions
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<TransactionResponseDto>> PostTransaction(CreateTransactionRequestDto createTransactionRequestDto, [FromHeader(Name = "Idempotency-Key")] string idempotencyKey, CancellationToken cancellationToken)
+        public async Task<ActionResult<TransactionResponseDto>> PostTransaction(CreateTransactionRequestDto createTransactionRequestDto, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrWhiteSpace(idempotencyKey))
-                return BadRequest("Idempotency-Key is required");
-
-            var transaction = await _transactionService.CreateAsync(createTransactionRequestDto, User, idempotencyKey, cancellationToken);
+            var transaction = await _transactionService.CreateAsync(createTransactionRequestDto, User, cancellationToken);
 
             return CreatedAtAction("GetTransaction", new { id = transaction.Id }, transaction);
         }

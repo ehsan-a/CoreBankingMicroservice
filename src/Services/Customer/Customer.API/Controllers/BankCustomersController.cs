@@ -1,5 +1,6 @@
 ﻿using Customer.Application.DTOs;
 using Customer.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace Customer.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize(Policy = "Accessibility")]
     public class BankCustomersController : ControllerBase
     {
         private readonly IBankCustomerService _bankCustomerService;

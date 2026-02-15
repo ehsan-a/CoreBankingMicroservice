@@ -42,6 +42,8 @@ namespace Shared.ServiceDefaults
                      {
                          ResponseWriter = HealthCheckResponses.WriteResponse
                      });
+                //.RequireAuthorization()
+                //.RequireRateLimiting(RateLimitPolicies.Fixed);
 
                 app.MapHealthChecks("/health/ready", new HealthCheckOptions
                 {

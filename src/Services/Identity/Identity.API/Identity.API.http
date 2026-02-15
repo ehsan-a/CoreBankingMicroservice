@@ -1,6 +1,13 @@
-@Identity.API_HostAddress = http://localhost:5159
+@Identity.API_HostAddress = https://localhost:7027
 
-GET {{Identity.API_HostAddress}}/weatherforecast/
-Accept: application/json
+
+POST {{Identity.API_HostAddress}}/api/identities/login
+Content-Type: application/json
+
+{
+  "email": "admin@gmail.com",
+  "password": "Admin123!@#",
+  "rememberMe": true
+}
 
 ###

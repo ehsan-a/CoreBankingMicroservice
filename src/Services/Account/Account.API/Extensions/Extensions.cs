@@ -1,8 +1,11 @@
 ﻿using Account.Application.Commands;
 using Account.Application.IntegrationEvents;
+using Account.Application.IntegrationEvents.EventHandling;
+using Account.Application.IntegrationEvents.Events;
 using Account.Application.Interfaces;
 using Account.Application.Services;
 using Account.Domain.Aggregates.BankAccountAggregate;
+using Account.Domain.Replicas;
 using Account.Infrastructure.Behaviors;
 using Account.Infrastructure.Generators;
 using Account.Infrastructure.Idempotency;
@@ -13,6 +16,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Shared.Application.Behaviors;
 using Shared.EventBus.Abstractions;
+using Shared.EventBus.Extensions;
 using Shared.EventBusRabbitMQ;
 using Shared.Infrastructure.Middlewares;
 using Shared.IntegrationEventLogEF.Services;
@@ -56,6 +60,7 @@ namespace Account.API.Extensions
 
             services.AddScoped<INumberGenerator, AccountNumberGenerator>();
             services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+            services.AddScoped<ICustomerReplicaRepository, CustomerReplicaRepository>();
             services.AddScoped<IRequestManager, RequestManager>();
             services.AddScoped<IBankAccountService, BankAccountService>();
 
@@ -69,7 +74,8 @@ namespace Account.API.Extensions
 
         private static void AddEventBusSubscriptions(this IEventBusBuilder eventBus)
         {
-            //eventBus.AddSubscription<IntegrationEvent, IntegrationEventHandler>();
+            eventBus.AddSubscription<TransactionCreatedIntegrationEvent, TransactionCreatedIntegrationEventHandler>();
+            eventBus.AddSubscription<BankCustomerCreatedIntegrationEvent, BankCustomerCreatedIntegrationEventHandler>();
         }
 
         public static IApplicationBuilder UseCustomMiddlewares(

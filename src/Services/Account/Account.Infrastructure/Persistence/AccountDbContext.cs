@@ -1,4 +1,5 @@
 ﻿using Account.Domain.Aggregates.BankAccountAggregate;
+using Account.Domain.Replicas;
 using Account.Infrastructure.Configurations;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,7 @@ namespace Account.Infrastructure.Persistence
         }
 
         public DbSet<BankAccount> BankAccounts { get; set; } = default!;
+        public DbSet<CustomerReplica> CustomerReplicas { get; set; } = default!;
 
         private readonly IMediator _mediator;
         private IDbContextTransaction _currentTransaction;

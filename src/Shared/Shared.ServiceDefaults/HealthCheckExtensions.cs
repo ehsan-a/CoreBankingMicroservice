@@ -20,6 +20,7 @@ namespace Shared.ServiceDefaults
             services.Configure<HealthCheckPublisherOptions>(options =>
             {
                 options.Delay = TimeSpan.FromSeconds(300);
+                //options.Predicate = healthCheck => healthCheck.Tags.Contains("sample");
             });
 
             services.AddSingleton<IHealthCheckPublisher, HealthCheckPublisher>();

@@ -1,9 +1,11 @@
 ﻿using Account.Application.DTOs;
 using Account.Application.Interfaces;
 using Account.Domain.Aggregates.BankAccountAggregate;
+using Account.Domain.Replicas;
 using AutoMapper;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Shared.Application.Exceptions;
 using Shared.Application.Interfaces;
 
 namespace Account.Application.Commands
@@ -11,24 +13,30 @@ namespace Account.Application.Commands
     public class CreateBankAccountCommandHandler : ICommandHandler<CreateBankAccountCommand, bool>
     {
         private readonly IBankAccountRepository _bankAccountRepository;
+        private readonly ICustomerReplicaRepository _customerReplicaRepository;
         private readonly IMapper _mapper;
         private readonly INumberGenerator _numberGenerator;
 
-        public CreateBankAccountCommandHandler(IBankAccountRepository bankAccountRepository, IMapper mapper, INumberGenerator numberGenerator)
+        public CreateBankAccountCommandHandler(
+            IBankAccountRepository bankAccountRepository,
+            ICustomerReplicaRepository customerReplicaRepository,
+            IMapper mapper,
+            INumberGenerator numberGenerator)
         {
             _bankAccountRepository = bankAccountRepository;
+            _customerReplicaRepository = customerReplicaRepository;
             _mapper = mapper;
             _numberGenerator = numberGenerator;
         }
 
         public async Task<bool> Handle(CreateBankAccountCommand request, CancellationToken cancellationToken)
         {
-            //var customerExists = await _customerRepository.ExistsByIdAsync(request.CustomerId, cancellationToken);
+            var customerExists = await _customerReplicaRepository.ExistsByIdAsync(request.CustomerId, cancellationToken);
 
-            //if (!customerExists)
-            //{
-            //    throw new NotFoundException("Customer", request.CustomerId);
-            //}
+            if (!customerExists)
+            {
+                throw new NotFoundException("Customer", request.CustomerId);
+            }
             var accountNumber = await _numberGenerator.GenerateAccountNumberAsync();
             var account = BankAccount.Create(accountNumber, request.CustomerId, request.UserId);
             await _bankAccountRepository.AddAsync(account, cancellationToken);
