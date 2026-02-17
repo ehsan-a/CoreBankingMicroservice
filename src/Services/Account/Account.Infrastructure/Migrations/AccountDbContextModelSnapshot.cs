@@ -57,7 +57,7 @@ namespace Account.Infrastructure.Migrations
                     b.HasIndex("AccountNumber")
                         .IsUnique();
 
-                    b.ToTable("BankAccounts");
+                    b.ToTable("BankAccounts", (string)null);
                 });
 
             modelBuilder.Entity("Account.Domain.Replicas.CustomerReplica", b =>
@@ -75,7 +75,7 @@ namespace Account.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CustomerReplicas");
+                    b.ToTable("CustomerReplicas", (string)null);
                 });
 
             modelBuilder.Entity("Account.Infrastructure.Idempotency.ClientRequest", b =>

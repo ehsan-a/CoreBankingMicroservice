@@ -3,6 +3,7 @@ using Account.Domain.Extensions;
 using Ardalis.GuardClauses;
 using Shared.Domain.Abstractions;
 using Shared.Domain.Interfaces;
+using System.Security.Principal;
 
 namespace Account.Domain.Aggregates.BankAccountAggregate
 {
@@ -41,10 +42,11 @@ namespace Account.Domain.Aggregates.BankAccountAggregate
             Balance += amount;
         }
 
-        public void ChangeStatus(BankAccountStatus status)
+        public void ChangeStatus(BankAccountStatus status, string oldValue, Guid userId)
         {
             Guard.Against.EnumOutOfRange(status, nameof(status));
             Status = status;
+            AddDomainEvent(new BankAccountUpdatedEvent(this, userId, oldValue));
         }
 
         public static BankAccount Create(string accountNumber, Guid customerId, Guid userId)
@@ -54,20 +56,11 @@ namespace Account.Domain.Aggregates.BankAccountAggregate
             return account;
         }
 
-        public static BankAccount Delete(BankAccount account, Guid userId)
+        public void Delete(Guid userId)
         {
-            account.AddDomainEvent(
-                new BankAccountDeletedEvent(account, userId)
-            );
-            return account;
-        }
-
-        public static BankAccount Update(BankAccount account, Guid userId, string oldValue)
-        {
-            account.AddDomainEvent(
-                new BankAccountUpdatedEvent(account, userId, oldValue)
-            );
-            return account;
+            Guard.Against.NullOrEmpty(userId, nameof(userId));
+            IsDeleted = true;
+            AddDomainEvent(new BankAccountDeletedEvent(this, userId));
         }
     }
 }

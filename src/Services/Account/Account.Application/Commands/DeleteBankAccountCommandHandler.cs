@@ -1,5 +1,6 @@
 ﻿using Account.Application.Specifications;
 using Account.Domain.Aggregates.BankAccountAggregate;
+using Shared.Application.Exceptions;
 using Shared.Application.Interfaces;
 
 namespace Account.Application.Commands
@@ -16,12 +17,10 @@ namespace Account.Application.Commands
         public async Task Handle(DeleteBankAccountCommand request, CancellationToken cancellationToken)
         {
             var spec = new BankAccountGetAllSpec();
-            var item = await _bankAccountRepository.GetByIdAsync(request.Id, spec, cancellationToken);
-            if (item == null) return;
+            var item = await _bankAccountRepository.GetByIdAsync(request.Id, spec, cancellationToken)
+            ?? throw new NotFoundException("Account Not Found!");
 
-            BankAccount.Delete(item, request.UserId);
-
-            _bankAccountRepository.Delete(item);
+            item.Delete(request.UserId);
             await _bankAccountRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }
     }

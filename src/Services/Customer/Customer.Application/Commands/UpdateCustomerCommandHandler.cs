@@ -19,19 +19,15 @@ namespace Customer.Application.Commands
 
         public async Task Handle(UpdateBankCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _bankCustomerRepository.GetByIdAsNoTrackingAsync(request.Id, cancellationToken);
-            if (customer == null) throw new NotFoundException("");
-
-            _mapper.Map(request, customer);
+            var customer = await _bankCustomerRepository.GetByIdAsNoTrackingAsync(request.Id, cancellationToken)
+            ?? throw new NotFoundException("");
 
             var oldAccount = await _bankCustomerRepository
               .GetByIdAsNoTrackingAsync(customer.Id, cancellationToken);
 
             var oldValue = JsonSerializer.Serialize(oldAccount);
 
-            _bankCustomerRepository.Update(customer);
-
-            BankCustomer.Update(customer, request.UserId, oldValue);
+            customer.ChangeFullName(request.FirstName, request.LastName, oldValue, request.UserId);
 
             await _bankCustomerRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }

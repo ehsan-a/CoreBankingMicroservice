@@ -81,7 +81,7 @@ namespace Transaction.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccountTransactions");
+                    b.ToTable("AccountTransactions", (string)null);
                 });
 
             modelBuilder.Entity("Transaction.Infrastructure.Idempotency.ClientRequest", b =>

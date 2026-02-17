@@ -17,7 +17,7 @@ namespace Customer.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -48,7 +48,7 @@ namespace Customer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankCustomers");
+                    b.ToTable("BankCustomers", (string)null);
                 });
 
             modelBuilder.Entity("Customer.Infrastructure.Idempotency.ClientRequest", b =>

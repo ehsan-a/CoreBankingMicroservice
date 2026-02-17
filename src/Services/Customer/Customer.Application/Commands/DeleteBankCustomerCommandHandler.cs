@@ -1,5 +1,6 @@
 ﻿using Customer.Application.Specifications;
 using Customer.Domain.Aggregates.BankCustomerAggregate;
+using Shared.Application.Exceptions;
 using Shared.Application.Interfaces;
 
 namespace Customer.Application.Commands
@@ -16,12 +17,11 @@ namespace Customer.Application.Commands
         public async Task Handle(DeleteBankCustomerCommand request, CancellationToken cancellationToken)
         {
             var spec = new BankCustomerGetAllSpec();
-            var item = await _bankCustomerRepository.GetByIdAsync(request.Id, spec, cancellationToken);
-            if (item == null) return;
+            var item = await _bankCustomerRepository.GetByIdAsync(request.Id, spec, cancellationToken)
+            ?? throw new NotFoundException("Customer Not Found");
 
-            BankCustomer.Delete(item, request.UserId);
+            item.Delete(request.UserId);
 
-            _bankCustomerRepository.Delete(item);
             await _bankCustomerRepository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
         }
     }

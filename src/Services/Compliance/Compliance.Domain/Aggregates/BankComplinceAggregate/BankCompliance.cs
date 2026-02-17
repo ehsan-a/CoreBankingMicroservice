@@ -7,10 +7,11 @@ namespace Compliance.Domain.Aggregates.BankComplinceAggregate
 {
     public class BankCompliance : BaseEntity, IAggregateRoot
     {
-        private BankCompliance(string nationalCode,
-                               bool centralBankCreditCheckPassed,
-                               bool civilRegistryVerified,
-                               bool policeClearancePassed)
+        private BankCompliance(
+            string nationalCode,
+            bool centralBankCreditCheckPassed,
+            bool civilRegistryVerified,
+            bool policeClearancePassed)
         {
             Guard.Against.NullOrEmpty(nationalCode, nameof(nationalCode));
 
@@ -29,16 +30,19 @@ namespace Compliance.Domain.Aggregates.BankComplinceAggregate
         public bool PoliceClearancePassed { get; private set; }
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
 
-        public static BankCompliance Create(string nationalCode,
-                                            bool centralBankCreditCheckPassed,
-                                            bool civilRegistryVerified,
-                                            bool policeClearancePassed,
-                                            Guid userId)
+        public static BankCompliance Create(
+            string nationalCode,
+            bool centralBankCreditCheckPassed,
+            bool civilRegistryVerified,
+            bool policeClearancePassed,
+            Guid userId)
         {
-            var authentication = new BankCompliance(nationalCode,
-                                                    centralBankCreditCheckPassed,
-                                                    civilRegistryVerified,
-                                                    policeClearancePassed);
+            var authentication = new BankCompliance(
+                nationalCode,
+                centralBankCreditCheckPassed,
+                civilRegistryVerified,
+                policeClearancePassed);
+
             authentication.AddDomainEvent(new BankComplianceCreatedEvent(authentication, userId));
             return authentication;
         }

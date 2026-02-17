@@ -46,7 +46,7 @@ namespace Compliance.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BankCompliances");
+                    b.ToTable("BankCompliances", (string)null);
                 });
 
             modelBuilder.Entity("Compliance.Infrastructure.Idempotency.ClientRequest", b =>

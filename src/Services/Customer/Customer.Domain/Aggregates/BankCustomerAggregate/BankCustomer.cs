@@ -26,6 +26,7 @@ namespace Customer.Domain.Aggregates.BankCustomerAggregate
         public string LastName { get; private set; }
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
         public bool IsDeleted { get; set; } = false;
+        public BankCustomerStatus Status { get; private set; } = BankCustomerStatus.Active;
 
         public static BankCustomer Create(string nationalCode, string firstName, string lastName, Guid userId)
         {
@@ -33,21 +34,31 @@ namespace Customer.Domain.Aggregates.BankCustomerAggregate
             customer.AddDomainEvent(new BankCustomerCreatedEvent(customer, userId));
             return customer;
         }
-
-        public static BankCustomer Delete(BankCustomer customer, Guid userId)
+        public void Delete(Guid userId)
         {
-            customer.AddDomainEvent(
-                new BankCustomerDeletedEvent(customer, userId)
-            );
-            return customer;
+            Guard.Against.NullOrEmpty(userId, nameof(userId));
+            IsDeleted = true;
+
+            AddDomainEvent(new BankCustomerDeletedEvent(this, userId));
         }
 
-        public static BankCustomer Update(BankCustomer customer, Guid userId, string oldValue)
+        public void ChangeFullName(string firstName, string lastName, string oldValue, Guid userId)
         {
-            customer.AddDomainEvent(
-                new BankCustomerUpdatedEvent(customer, userId, oldValue)
-            );
-            return customer;
+            Guard.Against.NullOrEmpty(firstName, nameof(firstName));
+            Guard.Against.NullOrEmpty(lastName, nameof(lastName));
+
+            FirstName = firstName;
+            LastName = lastName;
+
+            //AddDomainEvent(new BankCustomerUpdatedEvent(this, userId, oldValue));
+        }
+        public void ChangeStatus(BankCustomerStatus status, string oldValue, Guid userId)
+        {
+            Guard.Against.EnumOutOfRange(status, nameof(status));
+
+            Status = status;
+
+            AddDomainEvent(new BankCustomerUpdatedEvent(this, userId, oldValue));
         }
     }
 }

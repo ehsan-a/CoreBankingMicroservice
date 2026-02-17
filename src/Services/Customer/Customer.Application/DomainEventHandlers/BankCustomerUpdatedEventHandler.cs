@@ -5,18 +5,18 @@ using MediatR;
 
 namespace Customer.Application.DomainEventHandlers
 {
-    public class BankCustomerCreatedEventHandler : INotificationHandler<BankCustomerCreatedEvent>
+    public class BankCustomerUpdatedEventHandler : INotificationHandler<BankCustomerUpdatedEvent>
     {
         private readonly ICustomerIntegrationEventService _accountIntegrationEventService;
 
-        public BankCustomerCreatedEventHandler(ICustomerIntegrationEventService accountIntegrationEventService)
+        public BankCustomerUpdatedEventHandler(ICustomerIntegrationEventService accountIntegrationEventService)
         {
             _accountIntegrationEventService = accountIntegrationEventService;
         }
 
-        public async Task Handle(BankCustomerCreatedEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(BankCustomerUpdatedEvent notification, CancellationToken cancellationToken)
         {
-            var integrationEvent = new BankCustomerCreatedIntegrationEvent(notification.UserId,
+            var integrationEvent = new BankCustomerUpdatedIntegrationEvent(notification.UserId,
                 new DTOs.BankCustomerResponseDto
                 {
                     CreatedAt = notification.Customer.CreatedAt,
@@ -24,7 +24,8 @@ namespace Customer.Application.DomainEventHandlers
                     LastName = notification.Customer.LastName,
                     Id = notification.Customer.Id,
                     NationalCode = notification.Customer.NationalCode
-                });
+                },
+                notification.OldValue);
             await _accountIntegrationEventService.AddAndSaveEventAsync(integrationEvent);
         }
     }
